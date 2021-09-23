@@ -1,27 +1,62 @@
+// VALIDATION
+const form = document.querySelector('.form');
+const submitButton = document.querySelector('.submit__button');
+const checkbox = document.querySelector('#checkbox');
+let xhr = new XMLHttpRequest();
+const formResponse = document.querySelector('.form-response');
+let nameInput = document.querySelector('.name__input');
+let phoneInput = document.querySelector('.tel__input');
+
+checkbox.addEventListener('click', () => {
+    if(checkbox.checked) {
+        submitButton.removeAttribute('disabled');
+        console.log(submitButton);
+    }
+    if(!checkbox.checked) {
+        submitButton.setAttribute('disabled', 'false');
+        console.log(submitButton);
+    }
+    console.log(checkbox.checked);
+})
+
+form.onsubmit = function(e) {
+    e.preventDefault();
+    if(nameInput.value && phoneInput.value){
+    xhr.open('POST', 'url.php');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('name__input=' + nameInput.value + '&tel__input=' + phoneInput.value)
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4 && xhr.status === 200) {
+            formResponse.style.display = 'inline-block';
+            form.style.display = 'none';
+        }
+    }
+    formResponse.style.display = 'inline-block';
+    form.style.display = 'none';
+    }
+
+    console.log(nameInput.value);
+    console.log(phoneInput.value);
+}
+
 //SLIDER
 const slider = document.querySelector('.slider');
 const prevBtn = document.querySelector('.prev');
 const nextBtn = document.querySelector('.next');
-let userWidth = window.innerWidth;
 let index = 0;
 
 prevBtn.addEventListener('click', () => {
     if(index > 0) {
         index--;
         slider.style = 'margin-left:' + -277 * index + 'px'
-        
     }
 })
 nextBtn.addEventListener('click', () => {
     if(index < 3) {
         index++;
         slider.style = 'margin-left:' + -277 * index + 'px'
-        console.log(userWidth);
     }
 })
-
-
-
 // IMAGE ANIMATION
 window.addEventListener('scroll', () => {
     const imageOne = document.querySelector('.image-up');
